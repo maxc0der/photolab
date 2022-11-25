@@ -11,12 +11,15 @@ git clone https://github.com/maxc0der/photolab
 pip install -r requirements.txt
 ```
 
+В случае использования прокси, создайте файл proxy_list.txt в корневом каталоге, и разместите там в формате `ip:port:login:password`
+
 #### Класс worker
 Cодержит в себе конфигурацию сессии, прокси, файлов ввода-вывода, методы для взаимодействия с photolab. 
 Инициализация объекта worker:
-`worker = Worker(in_path, out_path)`
+`worker = Worker(in_path, out_path, use_proxy=True)`
 `in_path` - путь исходного изображения
 `out_path` - путь для сохранния результата (если требуется)
+`user_proxy` - требуется ли использование proxy (если True, берется случайный из файла proxy_list.txt)
 
 #### Функция go
 В файл main.py располагается основная функция `go(worker, dockid, need_save=False)`, отвечающая за коммуникацию с photolab. 
@@ -75,5 +78,8 @@ while worker.status != 'OK' and worker.status != 'Error':
 2022-11-25 17:01:08 Loading result...
 2022-11-25 17:01:09 Loading result...
 2022-11-25 17:01:10 Loading result...
+2022-11-25 17:01:11 Loading result...
+2022-11-25 17:01:12 Loading result...
+2022-11-25 17:01:13 OK
 OK
 ```
