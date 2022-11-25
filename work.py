@@ -14,7 +14,7 @@ logger.addHandler(handler)
 
 
 class Worker:
-    def __init__(self, in_path, out_path):
+    def __init__(self, in_path, out_path=None):
         session = requests.session()
         session.headers['User-agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 13_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
         session.headers['Referer'] = 'https://photolab.me/r/eeRAWgQ'
@@ -31,7 +31,7 @@ class Worker:
         session.headers['Sec-Fetch-Site'] = 'same-origin'
         session.headers['X-Requested-With'] = 'XMLHttpRequest'
         proxy = storage.get_random_proxy()
-        print(proxy)
+#ви        print(proxy)
         session.proxies = {'https': 'http://' + proxy, 'http': 'http://' + proxy}
         self.in_path = in_path
         self.out_path = out_path
@@ -68,11 +68,11 @@ class Worker:
         self.csrf = csrf
         return True
 
-    def confirm_load(self, img_name):
+    def confirm_load(self, img_name, dockid):
         try:
             self.status = 'Confirming'
             logger.debug(f'{self.in_path} {self.out_path} {self.status}')
-            response = self.session.get('https://photolab.me/effect/apply-combo?docId=25199589&images%5B%5D=https%3A%2F%2Ftemp-images.ws.pho.to%2F' + img_name + '&crops%5B0%5D%5B%5D=0&crops%5B0%5D%5B%5D=0&crops%5B0%5D%5B%5D=1&crops%5B0%5D%5B%5D=1&step=0&stepPos=0&tpl=0&skipStep=0&_csrf=' + self.csrf, cookies=self.cookies).text
+            response = self.session.get('https://photolab.me/effect/apply-combo?docId=' + dockid + '&images%5B%5D=https%3A%2F%2Ftemp-images.ws.pho.to%2F' + img_name + '&crops%5B0%5D%5B%5D=0&crops%5B0%5D%5B%5D=0&crops%5B0%5D%5B%5D=1&crops%5B0%5D%5B%5D=1&step=0&stepPos=0&tpl=0&skipStep=0&_csrf=' + self.csrf, cookies=self.cookies).text
             url = 'https://photolab.me' + json.loads(response)['result_url']
             self.status = 'Rendering'
             logger.debug(f'{self.in_path} {self.out_path} {self.status} Result will be here: {url}')
