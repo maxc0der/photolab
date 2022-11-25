@@ -54,6 +54,7 @@ while worker.status != 'OK' and worker.status != 'Error':
     time.sleep(1)
 ---------------------------------------------------------------------------------------------
 Ответ:
+
 2022-11-25 17:00:56 Uploading photo
 1.jpg result.jpg Uploaded: https://temp-images.ws.pho.to/3562d7912d7c44525fbbf5e19be898542b91a35e.jpeg
 1.jpg result.jpg Confirming
